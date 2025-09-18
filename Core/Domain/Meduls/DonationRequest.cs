@@ -8,9 +8,8 @@ using Domain.Meduls.Enums;
 
 namespace Domain.Meduls
 {
-    public class DonationRequest
+    public class DonationRequest :BaseEntity<int>
     {
-        public int Id { get; set; }
         [Required(ErrorMessage ="Name Is Required")]
         [StringLength(100,ErrorMessage ="Name Must Not Increase Above 100 Character")]
         public string PatientName { get; set; } = null!;

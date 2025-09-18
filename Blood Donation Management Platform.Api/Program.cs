@@ -3,6 +3,7 @@ using Domain.Contracs;
 using Microsoft.EntityFrameworkCore;
 using Persistence.DbContexts;
 using Persistence.InitializeDatabase;
+using Persistence.Reposatories;
 
 namespace Blood_Donation_Management_Platform.Api
 {
@@ -15,6 +16,7 @@ namespace Blood_Donation_Management_Platform.Api
             // Add services to the container.
 
             builder.Services.AddControllers();
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<IDbInitialize,DbInitializer>();
             builder.Services.AddDbContext<BloodDonationDbContext>(options =>
             {

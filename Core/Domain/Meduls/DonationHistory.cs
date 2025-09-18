@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace Domain.Meduls
 {
-    public class DonationHistory
+    public class DonationHistory :BaseEntity<int>   
     {
-        public int Id { get; set; }
 
         #region Donor
         public Donor Donor { get; set; } = null!;

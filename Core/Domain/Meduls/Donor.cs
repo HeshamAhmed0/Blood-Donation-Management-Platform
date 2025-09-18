@@ -8,9 +8,8 @@ using Domain.Meduls.Enums;
 
 namespace Domain.Meduls
 {
-    public class Donor
+    public class Donor :BaseEntity<int>
     {
-        public int Id { get; set; }
         [Required(ErrorMessage="Name Is Required")]
         public string Name { get; set; } = null!;
 
