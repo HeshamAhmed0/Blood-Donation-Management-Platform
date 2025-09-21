@@ -40,8 +40,8 @@ namespace Persistence.Data.Migrations
                     PhoneNumber = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     BloodType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UnAvailableFrom = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UnAvailableTo = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UnAvailableFrom = table.Column<TimeOnly>(type: "time", nullable: false),
+                    UnAvailableTo = table.Column<TimeOnly>(type: "time", nullable: false),
                     LastDonationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreateAt = table.Column<DateTime>(type: "datetime2", nullable: false)

@@ -12,7 +12,7 @@ using Persistence.DbContexts;
 namespace Persistence.Data.Migrations
 {
     [DbContext(typeof(BloodDonationDbContext))]
-    [Migration("20250917095908_InitialCreate")]
+    [Migration("20250921161820_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -131,11 +131,11 @@ namespace Persistence.Data.Migrations
                         .HasMaxLength(13)
                         .HasColumnType("nvarchar(13)");
 
-                    b.Property<DateTime>("UnAvailableFrom")
-                        .HasColumnType("datetime2");
+                    b.Property<TimeOnly>("UnAvailableFrom")
+                        .HasColumnType("time");
 
-                    b.Property<DateTime>("UnAvailableTo")
-                        .HasColumnType("datetime2");
+                    b.Property<TimeOnly>("UnAvailableTo")
+                        .HasColumnType("time");
 
                     b.HasKey("Id");
 

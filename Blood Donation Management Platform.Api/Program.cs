@@ -1,9 +1,13 @@
 
 using Domain.Contracs;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Persistence.DbContexts;
 using Persistence.InitializeDatabase;
 using Persistence.Reposatories;
+using Services;
+using Services.MappingProfiles;
+using ServicesAbstraction;
 
 namespace Blood_Donation_Management_Platform.Api
 {
@@ -18,6 +22,10 @@ namespace Blood_Donation_Management_Platform.Api
             builder.Services.AddControllers();
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<IDbInitialize,DbInitializer>();
+            builder.Services.AddScoped<IDonorReposatory,DonorReposatory>();
+            builder.Services.AddScoped<IDonorService,DonorService>();
+            builder.Services.AddScoped<IServiceManager,ServiceManager>();
+            //builder.Services.AddAutoMapper(typeof(AssemplyForAutoMapper).Assembly);
             builder.Services.AddDbContext<BloodDonationDbContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));

@@ -14,6 +14,7 @@ namespace Persistence.Data.Configrations
         public void Configure(EntityTypeBuilder<Donor> builder)
         {
             builder.HasKey(D => D.Id);
+            builder.Property(D => D.Id).ValueGeneratedOnAdd();
             builder.Property(D => D.Name).IsRequired().HasMaxLength(100);
             builder.Property(D => D.CreateAt).IsRequired();
             builder.Property(D => D.BloodType).IsRequired();

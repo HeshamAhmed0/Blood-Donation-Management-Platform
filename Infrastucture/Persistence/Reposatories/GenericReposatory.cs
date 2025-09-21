@@ -25,16 +25,14 @@ namespace Persistence.Reposatories
         {
            await bloodDonationDbContext.AddAsync(entity);
         }
-
         public void Delete(TEntity entity)
         {
-             bloodDonationDbContext.Remove(entity);
+          bloodDonationDbContext.Remove(entity);
         }
         public void Update(TEntity entity)
         {
-           bloodDonationDbContext.Update(entity);
+          bloodDonationDbContext.Update(entity);
         }
-
         public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
            return await bloodDonationDbContext.Set<TEntity>().ToListAsync();

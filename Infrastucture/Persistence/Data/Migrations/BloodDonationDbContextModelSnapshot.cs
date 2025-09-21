@@ -128,11 +128,11 @@ namespace Persistence.Data.Migrations
                         .HasMaxLength(13)
                         .HasColumnType("nvarchar(13)");
 
-                    b.Property<DateTime>("UnAvailableFrom")
-                        .HasColumnType("datetime2");
+                    b.Property<TimeOnly>("UnAvailableFrom")
+                        .HasColumnType("time");
 
-                    b.Property<DateTime>("UnAvailableTo")
-                        .HasColumnType("datetime2");
+                    b.Property<TimeOnly>("UnAvailableTo")
+                        .HasColumnType("time");
 
                     b.HasKey("Id");
 

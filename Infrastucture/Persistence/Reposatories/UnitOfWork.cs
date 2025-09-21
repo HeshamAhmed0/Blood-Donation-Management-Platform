@@ -30,7 +30,7 @@ namespace Persistence.Reposatories
             return Reposatories[type] as IGenericReposatory<TEntity, Tkey>;
         }
 
-        public async Task<int> SaveChanges()
+        public async Task<int> SaveChangesAsync()
         {
            return await bloodDonationDbContext.SaveChangesAsync();
         }

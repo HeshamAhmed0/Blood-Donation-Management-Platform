@@ -9,7 +9,7 @@ namespace Domain.Contracs
 {
     public interface IUnitOfWork
     {
-        public Task<int> SaveChanges();
+        public Task<int> SaveChangesAsync();
         public IGenericReposatory<TEntity, Tkey> GenericReposatory<TEntity, Tkey>() where TEntity : BaseEntity<Tkey>;
     }
 }
