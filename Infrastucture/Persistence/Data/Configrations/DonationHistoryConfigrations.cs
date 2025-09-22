@@ -15,11 +15,11 @@ namespace Persistence.Data.Configrations
         {
             builder.HasKey(DH => DH.Id);
             builder.HasOne(D => D.Donor)
-                   .WithMany()
+                   .WithMany(DH=>DH.DonationHistories)
                    .HasForeignKey(D => D.DonerId)
                    .IsRequired();
             builder.HasOne(DR => DR.DonationRequest)
-                   .WithMany()
+                   .WithMany(DH => DH.DonationHistories)
                    .HasForeignKey(DR => DR.PatieentId)
                    .IsRequired();
             builder.Property(D =>D.DonationDate).IsRequired();

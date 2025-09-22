@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Exceptions.DonorExceptions
 {
-    public class DonorNotFoundException : DonorException
+    public class DonorNotFoundException : DonationRequestException
     {
         public DonorNotFoundException(int Id ) : base($"Donor With Id {Id} Not Found",404)
         {

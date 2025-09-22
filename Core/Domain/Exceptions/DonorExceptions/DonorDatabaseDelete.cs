@@ -8,7 +8,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Domain.Exceptions.DonorExceptions
 {
-    public class DonorDatabaseDelete : DonorException
+    public class DonorDatabaseDelete : DonationRequestException
     {
         public DonorDatabaseDelete() : base("An unexpected error occurred while Deleting donor", 500)
         {

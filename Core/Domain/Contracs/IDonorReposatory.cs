@@ -7,7 +7,7 @@ using Domain.Meduls;
 
 namespace Domain.Contracs
 {
-    public interface IDonorReposatory 
+    public interface IDonorReposatory :IGenericReposatory<Donor,int>
     {
         public Task<Donor> GetDonorsByIdOrNameOrEmailOrPhoneNumber(string NameOrEmailOrPhoneNumber);
         public Task<Donor> GetDonorsByIdOrNameOrEmailOrPhoneNumber(int ID);

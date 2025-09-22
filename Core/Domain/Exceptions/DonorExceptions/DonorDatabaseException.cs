@@ -8,7 +8,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Domain.Exceptions.DonorExceptions
 {
-    public class DonorDatabaseException : DonorException
+    public class DonorDatabaseException : DonationRequestException
     {
         public DonorDatabaseException() : base("An unexpected error occurred while saving donor", 500)
         {

@@ -9,9 +9,11 @@ using ServicesAbstraction;
 
 namespace Services
 {
-    public class ServiceManager(IUnitOfWork unitOfWork,IDonorReposatory donorReposatory) : IServiceManager
+    public class ServiceManager(IUnitOfWork unitOfWork,IDonorReposatory donorReposatory,IDonationRequestReposatory donationRequestReposatory) : IServiceManager
     {
 
         public IDonorService donorService { get; } =new DonorService(unitOfWork,donorReposatory);
+
+        public IDonationRequestService donationRequestService { get; } =new DonationRequestService(donationRequestReposatory,unitOfWork);
     }
 }

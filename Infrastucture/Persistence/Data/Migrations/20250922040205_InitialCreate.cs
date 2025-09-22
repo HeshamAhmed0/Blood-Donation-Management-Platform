@@ -18,6 +18,8 @@ namespace Persistence.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PatientName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     NeedBloodType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsUrgent = table.Column<bool>(type: "bit", nullable: false),
                     HospitalName = table.Column<string>(type: "nvarchar(max)", nullable: false),

@@ -10,7 +10,7 @@ using Persistence.DbContexts;
 
 namespace Persistence.Reposatories
 {
-    public class DonorReposatory(BloodDonationDbContext bloodDonationDbContext) : IDonorReposatory
+    public class DonorReposatory(BloodDonationDbContext bloodDonationDbContext) : GenericReposatory<Donor,int>(bloodDonationDbContext),IDonorReposatory
     {
         private readonly BloodDonationDbContext bloodDonationDbContext = bloodDonationDbContext;
 

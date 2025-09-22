@@ -24,6 +24,8 @@ namespace Blood_Donation_Management_Platform.Api
             builder.Services.AddScoped<IDbInitialize,DbInitializer>();
             builder.Services.AddScoped<IDonorReposatory,DonorReposatory>();
             builder.Services.AddScoped<IDonorService,DonorService>();
+            builder.Services.AddScoped<IDonationRequestReposatory,DonationRequestReposatory>();
+            builder.Services.AddScoped<IDonationRequestService,DonationRequestService>();
             builder.Services.AddScoped<IServiceManager,ServiceManager>();
             //builder.Services.AddAutoMapper(typeof(AssemplyForAutoMapper).Assembly);
             builder.Services.AddDbContext<BloodDonationDbContext>(options =>

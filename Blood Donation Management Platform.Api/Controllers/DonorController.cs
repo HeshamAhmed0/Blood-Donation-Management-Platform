@@ -33,7 +33,7 @@ namespace Blood_Donation_Management_Platform.Api.Controllers
 
         }
 
-        [HttpPost("DeleteDonerProfile")]
+        [HttpDelete("DeleteDonerProfile")]
         public async Task<IActionResult> DeleteeDoner(int id)
         {
             var result = await serviceManager.donorService.DeleteDonor(id);
@@ -73,14 +73,14 @@ namespace Blood_Donation_Management_Platform.Api.Controllers
         }
        
         [HttpGet("GetDonerByNameOrPhoneNumberOrEmail")]
-        public async Task<IActionResult> DeleteeDoner(string NameOrEmailOrPhoneNumber)
+        public async Task<IActionResult> GetDonerByNameOrPhoneNumberOrEmail(string Input)
         {
 
-            var result = await serviceManager.donorService.GetDonorsByIdOrNameOrEmailOrPhoneNumber(NameOrEmailOrPhoneNumber);
+            var result = await serviceManager.donorService.GetDonorsByIdOrNameOrEmailOrPhoneNumber(Input);
             return Ok(new
             {
                 StatusCode = StatusCodes.Status200OK,
-                Message = "donor fetched successfully",
+                Message = "Donor fetched Successfully",
                 Data = result
             });
 

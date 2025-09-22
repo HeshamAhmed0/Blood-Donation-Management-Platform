@@ -60,6 +60,10 @@ namespace Persistence.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("HospitalLocation")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -79,6 +83,11 @@ namespace Persistence.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasMaxLength(13)
+                        .HasColumnType("nvarchar(13)");
 
                     b.Property<DateTime>("RequestDate")
                         .HasColumnType("datetime2");
@@ -142,13 +151,13 @@ namespace Persistence.Data.Migrations
             modelBuilder.Entity("Domain.Meduls.DonationHistory", b =>
                 {
                     b.HasOne("Domain.Meduls.Donor", "Donor")
-                        .WithMany()
+                        .WithMany("DonationHistories")
                         .HasForeignKey("DonerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Domain.Meduls.DonationRequest", "DonationRequest")
-                        .WithMany()
+                        .WithMany("DonationHistories")
                         .HasForeignKey("PatieentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -156,6 +165,16 @@ namespace Persistence.Data.Migrations
                     b.Navigation("DonationRequest");
 
                     b.Navigation("Donor");
+                });
+
+            modelBuilder.Entity("Domain.Meduls.DonationRequest", b =>
+                {
+                    b.Navigation("DonationHistories");
+                });
+
+            modelBuilder.Entity("Domain.Meduls.Donor", b =>
+                {
+                    b.Navigation("DonationHistories");
                 });
 #pragma warning restore 612, 618
         }

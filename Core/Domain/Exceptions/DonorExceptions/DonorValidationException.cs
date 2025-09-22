@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Exceptions.DonorExceptions
 {
-    public class DonorValidationException : DonorException
+    public class DonorValidationException : DonationRequestException
     {
       
         public DonorValidationException() : base("Donor data cannot be null", 400)

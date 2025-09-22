@@ -42,7 +42,8 @@ namespace Services
                 UnAvailableFrom = donorRequestDto.UnAvailableFrom,
                 UnAvailableTo = donorRequestDto.UnAvailableTo,
             };
-            await unitOfWork.GenericReposatory<Donor, int>().Add(NewDonor);
+            //await unitOfWork.GenericReposatory<Donor, int>().Add(NewDonor);
+            await donorReposatory.Add(NewDonor);
             var result =await unitOfWork.SaveChangesAsync();
             if (result < 0)
             {
@@ -68,24 +69,20 @@ namespace Services
         public async Task<DonorResponseDto> UpdateDonor(DonorUpdateDto donorUpdateDto)
         {
             if (donorUpdateDto == null) throw new DonorValidationException();
-            var donorResponseDto =await GetDonorsByIdOrNameOrEmailOrPhoneNumber(donorUpdateDto.PhoneNumber);
-            if (donorResponseDto == null) throw new DonorNotFoundException(donorUpdateDto.PhoneNumber);
-            BloodTypes BloodTypeOfUpdateUser = (BloodTypes)donorUpdateDto.BloodType;
-            var Donor =new Donor()
-            {
-                Id=donorResponseDto.Id,
-                Email = donorUpdateDto.Email,
-                BloodType = BloodTypeOfUpdateUser,
-                LastDonationDate = donorUpdateDto.LastDonationDate,
-                CreateAt = DateTime.Now,
-                Location = donorUpdateDto.Location,
-                Name = donorUpdateDto.Name,
-                PhoneNumber = donorUpdateDto.PhoneNumber,
-                UnAvailableFrom = donorUpdateDto.UnAvailableFrom,
-                UnAvailableTo = donorUpdateDto.UnAvailableTo,
-            };
-
-             unitOfWork.GenericReposatory<Donor, int>().Update(Donor);
+            var Donor =await CheckForDonor(donorUpdateDto.Id);
+            if (Donor == null) throw new DonorNotFoundException(donorUpdateDto.PhoneNumber);
+            Donor.LastDonationDate = donorUpdateDto.LastDonationDate; 
+            Donor.Location = donorUpdateDto.Location; 
+            Donor.CreateAt = donorUpdateDto.CreateAt; 
+            Donor.UnAvailableFrom = donorUpdateDto.UnAvailableFrom; 
+            Donor.UnAvailableTo = donorUpdateDto.UnAvailableTo; 
+            BloodTypes BloodTypeForUpdateDonor =(BloodTypes)donorUpdateDto.BloodType;
+            Donor.BloodType = BloodTypeForUpdateDonor; 
+            Donor.UnAvailableTo = donorUpdateDto.UnAvailableTo; 
+            Donor.Email = donorUpdateDto.Email;
+            Donor.Name = donorUpdateDto.Name;
+            Donor.LastDonationDate=DateTime.Now;
+            donorReposatory.Update(Donor);
             var result = await unitOfWork.SaveChangesAsync();
             if(result < 0)
             {
@@ -113,7 +110,7 @@ namespace Services
             if (Id == null) throw new DonorValidationException();
             var donor = await donorReposatory.GetDonorsByIdOrNameOrEmailOrPhoneNumber(Id);
             if (donor == null) throw new DonorNotFoundException(Id);
-            unitOfWork.GenericReposatory<Donor,int>().Delete(donor);
+           donorReposatory.Delete(donor);
             var result =await unitOfWork.SaveChangesAsync();
             if(result <= 0)
             {
@@ -123,7 +120,7 @@ namespace Services
         }
         public async Task<IEnumerable<DonorResponseDto>> GetAllDonors()
         {
-            var result = await unitOfWork.GenericReposatory<Donor, int>().GetAllAsync();
+            var result = await donorReposatory.GetAllAsync();
             if (result == null) throw new DonorNotFoundException();
             var donorResponseDtos = new List<DonorResponseDto>();
             foreach (var donor in result)
@@ -189,5 +186,14 @@ namespace Services
             return DonorResponse;
         }
 
+        public async Task<Donor> CheckForDonor(int Id)
+        {
+            if (Id == null) throw new Exception("ID Not Allow To be Null");
+            var donor = await unitOfWork.GenericReposatory<Donor,int>().GetByIdAsync(Id);
+            if (donor == null) return null;
+            return donor;
+        }
+
     }
 }
+

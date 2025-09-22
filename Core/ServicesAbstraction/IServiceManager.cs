@@ -9,5 +9,6 @@ namespace ServicesAbstraction
     public interface IServiceManager
     {
         IDonorService donorService { get; }
+        IDonationRequestService donationRequestService { get; }
     }
 }

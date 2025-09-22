@@ -7,7 +7,7 @@ using Domain.Meduls;
 
 namespace Domain.Exceptions.DonorExceptions
 {
-    public class DonorConflictException : DonorException
+    public class DonorConflictException : DonationRequestException
     {
         public DonorConflictException(string Email) : base($"A donor with email {Email} already exists.", 409)
         {
