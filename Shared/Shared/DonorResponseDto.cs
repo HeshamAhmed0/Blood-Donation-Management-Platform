@@ -19,6 +19,8 @@ namespace Shared
         public TimeOnly UnAvailableTo { get; set; }
         public DateTime LastDonationDate { get; set; }
         public string Location { get; set; } = null!;
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
         public DateTime CreateAt { get; set; } = DateTime.Now;
     }
 }

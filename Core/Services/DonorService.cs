@@ -41,6 +41,8 @@ namespace Services
                 PhoneNumber = donorRequestDto.PhoneNumber,
                 UnAvailableFrom = donorRequestDto.UnAvailableFrom,
                 UnAvailableTo = donorRequestDto.UnAvailableTo,
+                Latitude=donorRequestDto.Latitude,
+                Longitude=donorRequestDto.Longitude,
             };
             //await unitOfWork.GenericReposatory<Donor, int>().Add(NewDonor);
             await donorReposatory.Add(NewDonor);
@@ -63,6 +65,8 @@ namespace Services
                     PhoneNumber = donorRequestDto.PhoneNumber,
                     UnAvailableFrom = donorRequestDto.UnAvailableFrom,
                     UnAvailableTo = donorRequestDto.UnAvailableTo,
+                    Longitude= donorRequestDto.Longitude,
+                    Latitude= donorRequestDto.Latitude,
                 };
             return DonorResponse;
         }
@@ -82,6 +86,8 @@ namespace Services
             Donor.Email = donorUpdateDto.Email;
             Donor.Name = donorUpdateDto.Name;
             Donor.LastDonationDate=DateTime.Now;
+            Donor.Latitude= donorUpdateDto.Latitude;
+            Donor.Longitude= donorUpdateDto.Longitude;
             donorReposatory.Update(Donor);
             var result = await unitOfWork.SaveChangesAsync();
             if(result < 0)
@@ -102,6 +108,8 @@ namespace Services
                 PhoneNumber = Donor.PhoneNumber,
                 UnAvailableFrom = Donor.UnAvailableFrom,
                 UnAvailableTo = Donor.UnAvailableTo,
+                Longitude = Donor.Longitude,
+                Latitude = Donor.Latitude,
             };
             return donorResponseDto1;
         }
@@ -137,7 +145,9 @@ namespace Services
                     LastDonationDate = donor.LastDonationDate,
                     UnAvailableFrom = donor.UnAvailableFrom,
                     UnAvailableTo = donor.UnAvailableTo,
-                    CreateAt = donor.CreateAt
+                    CreateAt = donor.CreateAt,
+                    Latitude = donor.Latitude,
+                    Longitude= donor.Longitude,
                 };
                 donorResponseDtos.Add(dto);
             }
@@ -161,6 +171,8 @@ namespace Services
                 PhoneNumber = donorRequestDto.PhoneNumber,
                 UnAvailableFrom = donorRequestDto.UnAvailableFrom,
                 UnAvailableTo = donorRequestDto.UnAvailableTo,
+                Latitude = donorRequestDto.Latitude,
+                Longitude = donorRequestDto.Longitude,
             };
             return DonorResponse;
         }
@@ -182,6 +194,8 @@ namespace Services
                 PhoneNumber = donorRequestDto.PhoneNumber,
                 UnAvailableFrom = donorRequestDto.UnAvailableFrom,
                 UnAvailableTo = donorRequestDto.UnAvailableTo,
+                Longitude = donorRequestDto.Longitude,
+                Latitude = donorRequestDto.Latitude,
             };
             return DonorResponse;
         }

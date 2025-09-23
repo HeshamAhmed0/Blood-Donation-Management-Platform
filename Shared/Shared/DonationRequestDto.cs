@@ -19,10 +19,7 @@ namespace Shared
         [Phone(ErrorMessage = "PhoneNumber Is Not Correct")]
         [StringLength(13, ErrorMessage = ("Phone Number Must Increase Above 13"))]
         public string PhoneNumber { get; set; } = null!;
-      
-        
-        
-        
+
         [Required(ErrorMessage = "Email Is Required")]
         [EmailAddress(ErrorMessage = ("Email Is UnAvailable"))]
         public string Email { get; set; } = null!;
@@ -36,6 +33,10 @@ namespace Shared
         public string HospitalName { get; set; } = null!;
         [Required(ErrorMessage = "Hospital Location Is Required")]
         public string HospitalLocation { get; set; } = null!;
+        [Required(ErrorMessage = "Latitude Is Required")]
+        public double Latitude { get; set; }
+        [Required(ErrorMessage = "Longitude Is Required")]
+        public double Longitude { get; set; }
         [Required(ErrorMessage = "Request Date Is Required")]
         public DateTime RequestDate { get; set; } = DateTime.Now;
 

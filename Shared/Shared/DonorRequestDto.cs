@@ -31,6 +31,10 @@ namespace Shared
         public DateTime LastDonationDate { get; set; }
         [Required(ErrorMessage = "Location Is Required")]
         public string Location { get; set; } = null!;
+        [Required(ErrorMessage = "Latitude Is Required")]
+        public double Latitude { get; set; }
+        [Required(ErrorMessage = "Longitude Is Required")]
+        public double Longitude { get; set; }
         public DateTime CreateAt { get; set; } = DateTime.Now;
     }
 }

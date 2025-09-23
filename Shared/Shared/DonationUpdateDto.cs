@@ -22,8 +22,7 @@ namespace Shared
         [Required(ErrorMessage = "Email Is Required")]
         [EmailAddress(ErrorMessage = ("Email Is UnAvailable"))]
         public string Email { get; set; } = null!;
-
-
+        
         [Required(ErrorMessage = "Blood Type Is Required")]
         public BloodTypesRequestDto NeedBloodType { get; set; }
         [Required(ErrorMessage = "IsUrgent Is Required")]
@@ -32,6 +31,10 @@ namespace Shared
         public string HospitalName { get; set; } = null!;
         [Required(ErrorMessage = "Hospital Location Is Required")]
         public string HospitalLocation { get; set; } = null!;
+        [Required(ErrorMessage = "Latitude Is Required")]
+        public double Latitude { get; set; }
+        [Required(ErrorMessage = "Longitude Is Required")]
+        public double Longitude { get; set; }
         [Required(ErrorMessage = "Request Date Is Required")]
         public DateTime RequestDate { get; set; } = DateTime.Now;
 

@@ -32,6 +32,8 @@ namespace Domain.Meduls
         [Required(ErrorMessage = "Location Is Required")]
         public string Location { get; set; }=null!;
         public DateTime CreateAt { get; set; }=DateTime.Now;
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
         public ICollection<DonationHistory> DonationHistories { get; set; } = new List<DonationHistory>();
     }
 }

@@ -45,7 +45,8 @@ namespace Services
                 NeedBloodType=bloodTypes,
                 PatientName=donationRequestDto.PatientName,
                 PhoneNumber=donationRequestDto.PhoneNumber,
-
+                Longitude=donationRequestDto.Longitude,
+                Latitude=donationRequestDto.Latitude,
             };
             await donationRequestReposatory.Add(donationRequest);
             var result =await unitOfWork.SaveChangesAsync();
@@ -66,6 +67,8 @@ namespace Services
                 NeedBloodType = bloodTypesOfResponse,
                 PatientName = donationRequestDto.PatientName,
                 PhoneNumber = donationRequestDto.PhoneNumber,
+                Latitude = donationRequestDto.Latitude,
+                Longitude = donationRequestDto.Longitude,
             };
             return donationResponseDto;
 
@@ -82,6 +85,8 @@ namespace Services
             DonationRequest.RequestDate = donationUpdateDto.RequestDate;
             DonationRequest.HospitalName=donationUpdateDto.HospitalName;
             DonationRequest.IsUrgent = donationUpdateDto.IsUrgent;
+            DonationRequest.Longitude = donationUpdateDto.Longitude;
+            DonationRequest.Latitude = donationUpdateDto.Latitude;
             BloodTypes bloodTypes = (BloodTypes)donationUpdateDto.NeedBloodType;
             DonationRequest.NeedBloodType = bloodTypes;
             StatusOfRequest status = (StatusOfRequest)donationUpdateDto.Status;
@@ -105,6 +110,8 @@ namespace Services
                 NeedBloodType = BloodTypeOfResponse,
                 PatientName = donationUpdateDto.PatientName,
                 PhoneNumber = donationUpdateDto.PhoneNumber,
+                Latitude = donationUpdateDto.Latitude,
+                Longitude = donationUpdateDto.Longitude,
             };
             return donationResponseDto;
         }
@@ -144,6 +151,8 @@ namespace Services
                     NeedBloodType = BloodTypeOfResponse,
                     PatientName = DonationRequest.PatientName,
                     PhoneNumber = DonationRequest.PhoneNumber,
+                    Longitude = DonationRequest.Longitude,
+                    Latitude = DonationRequest.Latitude,
                 };
                 donationResponseDtos.Add(donationResponseDto);
 
@@ -170,6 +179,8 @@ namespace Services
                 NeedBloodType = BloodTypeOfResponse,
                 PatientName = donationRequestDto.PatientName,
                 PhoneNumber = donationRequestDto.PhoneNumber,
+                Latitude = donationRequestDto.Latitude,
+                Longitude = donationRequestDto.Longitude,
             };
             return donationResponseDto;
         }
@@ -193,6 +204,8 @@ namespace Services
                 NeedBloodType = BloodTypeOfResponse,
                 PatientName = donationRequestDto.PatientName,
                 PhoneNumber = donationRequestDto.PhoneNumber,
+                Longitude = donationRequestDto.Longitude,
+                Latitude = donationRequestDto.Latitude,
             };
             return donationResponseDto;
         }

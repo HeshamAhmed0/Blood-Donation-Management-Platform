@@ -19,6 +19,8 @@ namespace Shared
         public bool IsUrgent { get; set; } = false;
         public string HospitalName { get; set; } = null!;
         public string HospitalLocation { get; set; } = null!;
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
         public DateTime RequestDate { get; set; } = DateTime.Now;
         public StatusOfRequestDto Status { get; set; } 
     }
