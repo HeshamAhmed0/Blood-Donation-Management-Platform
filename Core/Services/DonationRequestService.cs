@@ -18,11 +18,15 @@ namespace Services
     {
         private readonly IDonationRequestReposatory donationRequestReposatory;
         private readonly IUnitOfWork unitOfWork;
+        private readonly IDonorService donorService;
+        private readonly INotificationService notificationService;
 
-        public DonationRequestService(IDonationRequestReposatory donationRequestReposatory,IUnitOfWork unitOfWork)
+        public DonationRequestService(IDonationRequestReposatory donationRequestReposatory,IUnitOfWork unitOfWork ,IDonorService donorService,INotificationService notificationService)
         {
             this.donationRequestReposatory = donationRequestReposatory;
             this.unitOfWork = unitOfWork;
+            this.donorService = donorService;
+            this.notificationService = notificationService;
         }
 
         public async Task<DonationResponseDto> AddDonationRequest(DonationRequestDto donationRequestDto)
@@ -51,6 +55,19 @@ namespace Services
             await donationRequestReposatory.Add(donationRequest);
             var result =await unitOfWork.SaveChangesAsync();
             if (result < 0) throw new DonationRequestDatabaseException();
+
+
+            #region SendEmailMessage
+            var Donors = await donorService.GetAllDonors();
+            var ValidDonors = Donors.Where(B => B.BloodType == donationRequestDto.NeedBloodType && B.LastDonationDate.AddMonths(3) <= DateTime.Now);
+            foreach (var donor in ValidDonors)
+            {
+               await notificationService.SendEmailAsync(donor.Email, donationRequestDto.PatientName, donationRequestDto.HospitalLocation, donationRequestDto.Latitude, donationRequestDto.Longitude);
+            }
+            #endregion
+
+
+
             StatusOfRequestDto statusOfResponse = (StatusOfRequestDto)donationRequestDto.Status;
             BloodTypesRequestDto bloodTypesOfResponse = (BloodTypesRequestDto)donationRequestDto.NeedBloodType;
             var CheckForId = await donationRequestReposatory.GetDonationRequestByIdOrNameOrEmailOrPhoneNumber(donationRequestDto.PhoneNumber);

@@ -23,6 +23,7 @@ namespace Blood_Donation_Management_Platform.Api
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<IDbInitialize,DbInitializer>();
             builder.Services.AddScoped<IDonorReposatory,DonorReposatory>();
+            builder.Services.AddScoped<INotificationService, NotificationService>();
             builder.Services.AddScoped<IDonorService,DonorService>();
             builder.Services.AddScoped<IDonationRequestReposatory,DonationRequestReposatory>();
             builder.Services.AddScoped<IDonationRequestService,DonationRequestService>();

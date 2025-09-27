@@ -10,5 +10,6 @@ namespace ServicesAbstraction
     {
         IDonorService donorService { get; }
         IDonationRequestService donationRequestService { get; }
+        INotificationService notificationService { get; }
     }
 }
