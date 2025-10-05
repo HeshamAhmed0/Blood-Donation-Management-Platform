@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>Blood_Donation_Management_Platform.Api</RootNamespace>
+    <UserSecretsId>d905e732-b0a7-46f0-9712-a54da889363b</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

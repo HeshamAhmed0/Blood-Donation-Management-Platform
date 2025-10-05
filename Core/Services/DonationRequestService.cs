@@ -63,9 +63,11 @@ namespace Services
             foreach (var donor in ValidDonors)
             {
                await notificationService.SendEmailAsync(donor.Email, donationRequestDto.PatientName, donationRequestDto.HospitalLocation, donationRequestDto.Latitude, donationRequestDto.Longitude);
+               //await notificationService.SendSmsAsync(donor.PhoneNumber,donor.Name,donor.Latitude, donor.Longitude);
             }
-            #endregion
+          
 
+            #endregion
 
 
             StatusOfRequestDto statusOfResponse = (StatusOfRequestDto)donationRequestDto.Status;
