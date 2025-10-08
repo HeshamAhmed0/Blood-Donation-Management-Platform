@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Domain.Meduls;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Data.Configrations;
 namespace Persistence.DbContexts
 {
-    public class BloodDonationDbContext :DbContext
+    public class BloodDonationDbContext :IdentityDbContext<ApplicationUser>
     {
         public BloodDonationDbContext(DbContextOptions options) : base(options)
         {

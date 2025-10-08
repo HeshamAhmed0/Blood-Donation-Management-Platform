@@ -12,7 +12,7 @@ using ServicesAbstraction;
 namespace Services
 {
     public class ServiceManager(IUnitOfWork unitOfWork,IDonorReposatory donorReposatory,IDonationRequestReposatory donationRequestReposatory
-                                 ,IConfiguration configuration,IDonorService donorService,INotificationService notificationService) : IServiceManager
+                                 ,IConfiguration configuration,IDonorService donorService,INotificationService notificationService,IDonationRequestService donationRequestService) : IServiceManager
     {
 
         public IDonorService donorService { get; } =new DonorService(unitOfWork,donorReposatory);
@@ -20,5 +20,7 @@ namespace Services
         public IDonationRequestService donationRequestService { get; } =new DonationRequestService(donationRequestReposatory,unitOfWork,donorService,notificationService);
 
         public INotificationService notificationService { get; } = new NotificationService( configuration);
+
+        public IDashboardService dashboardService { get; } = new DashboardService(donorService, donationRequestService, unitOfWork);
     }
 }

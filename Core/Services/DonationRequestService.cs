@@ -32,10 +32,6 @@ namespace Services
         public async Task<DonationResponseDto> AddDonationRequest(DonationRequestDto donationRequestDto)
         {
            if(donationRequestDto == null || donationRequestDto.PhoneNumber==null ||donationRequestDto.Email==null) throw new DonationRequestValidationException();
-           var CheckForDonationRequestByPhoneNumber =await donationRequestReposatory.GetDonationRequestByIdOrNameOrEmailOrPhoneNumber(donationRequestDto.PhoneNumber);
-            if (CheckForDonationRequestByPhoneNumber is not null) throw new DonationRequestConflictException(donationRequestDto.PhoneNumber);
-           var CheckForDonationRequestByEmail =await donationRequestReposatory.GetDonationRequestByIdOrNameOrEmailOrPhoneNumber(donationRequestDto.Email);
-            if (CheckForDonationRequestByPhoneNumber is not null) throw new DonationRequestConflictException(donationRequestDto.Email);
            StatusOfRequest status =(StatusOfRequest)donationRequestDto.Status;
             BloodTypes bloodTypes =(BloodTypes)donationRequestDto.NeedBloodType;
             DonationRequest donationRequest = new DonationRequest()

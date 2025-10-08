@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Domain.Exceptions.DonorExceptions;
+using Microsoft.AspNetCore.Mvc;
 using ServicesAbstraction;
 using Shared;
 
@@ -62,14 +63,16 @@ namespace Blood_Donation_Management_Platform.Api.Controllers
         [HttpGet("GetDonerById")]
         public async Task<IActionResult> GetDonerById(int id)
         {
-            var result = await serviceManager.donorService.GetDonorsByIdOrNameOrEmailOrPhoneNumber(id);
-            return Ok(new
+            try
             {
-                StatusCode = StatusCodes.Status200OK,
-                Message = "donor fetched successfully",
-                Data = result
-            });
+                var result = await serviceManager.donorService.GetDonorsByIdOrNameOrEmailOrPhoneNumber(id);
+                return Ok(result);
 
+            }
+            catch (DonorNotFoundException)
+            {
+                return NotFound();
+            }
         }
        
         [HttpGet("GetDonerByNameOrPhoneNumberOrEmail")]

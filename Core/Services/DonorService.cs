@@ -157,7 +157,7 @@ namespace Services
         {
             if (Id == null) throw new Exception("Id Not Allow To be Null");
             var donorRequestDto = await donorReposatory.GetDonorsByIdOrNameOrEmailOrPhoneNumber(Id);
-            if (donorRequestDto == null) return null;
+            if (donorRequestDto == null) throw new DonorNotFoundException();
             BloodTypesRequestDto BloodOFUser = (BloodTypesRequestDto)donorRequestDto.BloodType;
             var DonorResponse = new DonorResponseDto()
             {

@@ -37,6 +37,7 @@ namespace Services
                 DonerId=donationHistoryRequestDto.DonerId,
                 DonationDate=DateTime.Now,
                 PatieentId= donationHistoryRequestDto.PatieentId,
+                Notes=donationHistoryRequestDto.Notes,
             };
              await unitOfWork.GenericReposatory<DonationHistory, int>().Add(donationHistory);
             var result =await unitOfWork.SaveChangesAsync();
@@ -45,7 +46,8 @@ namespace Services
             {
                 DonationDate= donationHistory.DonationDate,
                 DonerId= donationHistory.DonerId,
-                PatieentId= donationHistory.PatieentId
+                PatieentId= donationHistory.PatieentId,
+                Notes= donationHistory.Notes,
             };
             return donationHistoryResponseDto;
         }
@@ -72,14 +74,65 @@ namespace Services
             return CountOfDonors;
         }
 
-        public Task<IEnumerable<DonationHistoryResponseDto>> GetAllDonationHistory()
+        public async Task<IEnumerable<DonationHistoryResponseDto>> GetAllDonationHistory()
         {
-            throw new NotImplementedException();
+            var result = await unitOfWork.GenericReposatory<DonationHistory,int>().GetAllAsync();
+            if (result == null) throw new Exception("There Are Not DonationHistory In Database");
+            var donationHistoryDtos = new List<DonationHistoryResponseDto>();
+            foreach(var history in result)
+            {
+                DonationHistoryResponseDto donationHistoryResponseDto = new DonationHistoryResponseDto()
+                {
+                    DonationDate = DateTime.Now,
+                    DonerId =history.DonerId,
+                    Notes = history.Notes,
+                    PatieentId = history.PatieentId,
+                };
+                donationHistoryDtos.Add(donationHistoryResponseDto);
+            }
+            return donationHistoryDtos;
         }
 
-        public Task<IEnumerable<DonationHistoryResponseDto>> GetAllDonationHistoryByBloodType(BloodTypesRequestDto bloodTypesRequestDto)
+        public async Task<IEnumerable<DonationHistoryResponseDto>> GetAllDonationHistoryByDonorId(int DonorId)
         {
-            throw new NotImplementedException();
+            var donationHistoryDtos = await unitOfWork.GenericReposatory<DonationHistory, int>().GetAllAsync();
+            if (donationHistoryDtos == null) throw new Exception("There Are Not DonationHistory In DataBase");
+            var FilterationById = donationHistoryDtos.Where(Id => Id.DonerId == DonorId);
+            if (FilterationById == null) throw new Exception("There Are Not DonationHistory In DataBase");
+            var donationHistoryDtoById = new List<DonationHistoryResponseDto>();
+            foreach (var history in FilterationById)
+            {
+                DonationHistoryResponseDto donationHistoryResponseDto = new DonationHistoryResponseDto()
+                {
+                    DonationDate = DateTime.Now,
+                    DonerId = history.DonerId,
+                    Notes = history.Notes,
+                    PatieentId = history.PatieentId,
+                };
+                donationHistoryDtoById.Add(donationHistoryResponseDto);
+            }
+            return donationHistoryDtoById;
+        }
+
+        public async Task<IEnumerable<DonationHistoryResponseDto>> GetAllDonationHistoryByPatientId(int PatientId)
+        {
+            var donationHistoryDtos = await unitOfWork.GenericReposatory<DonationHistory, int>().GetAllAsync();
+            if (donationHistoryDtos == null) throw new Exception("There Are Not DonationHistory In DataBase");
+            var FilterationById = donationHistoryDtos.Where(Id => Id.PatieentId == PatientId);
+            if (FilterationById == null) throw new Exception("There Are Not DonationHistory In DataBase");
+            var donationHistoryDtoById = new List<DonationHistoryResponseDto>();
+            foreach (var history in FilterationById)
+            {
+                DonationHistoryResponseDto donationHistoryResponseDto = new DonationHistoryResponseDto()
+                {
+                    DonationDate = DateTime.Now,
+                    DonerId = history.DonerId,
+                    Notes = history.Notes,
+                    PatieentId = history.PatieentId,
+                };
+                donationHistoryDtoById.Add(donationHistoryResponseDto);
+            }
+            return donationHistoryDtoById;
         }
 
         public async Task<IEnumerable<DonationResponseDto>> GetAllDonationRequest()
@@ -93,12 +146,6 @@ namespace Services
             var donors = await donorService.GetAllDonors();
             return donors;
         }
-
-        public Task<IEnumerable<DonationHistoryResponseDto>> GetDonationHistoryForDonor(string PhoneNumber)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<IEnumerable<DonationResponseDto>> GetDonationRequestsByBloodType(BloodTypesRequestDto bloodTypesRequestDto)
         {
             var donationrequest = await donationRequestService.GetAllDonationRequest();

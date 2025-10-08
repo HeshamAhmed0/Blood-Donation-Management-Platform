@@ -21,7 +21,7 @@ namespace ServicesAbstraction
         public Task<DonorResponseDto> UpdateDonor(DonorUpdateDto donorUpdateDto);
         public Task<DonationHistoryResponseDto> AddDonationHistory(DonationHistoryRequestDto donationHistoryRequestDto);
         public Task<IEnumerable<DonationHistoryResponseDto>> GetAllDonationHistory();
-        public Task<IEnumerable<DonationHistoryResponseDto>> GetAllDonationHistoryByBloodType(BloodTypesRequestDto bloodTypesRequestDto);
-        public Task<IEnumerable<DonationHistoryResponseDto>> GetDonationHistoryForDonor(string PhoneNumber);
+        public Task<IEnumerable<DonationHistoryResponseDto>> GetAllDonationHistoryByPatientId(int PatientId);
+        public Task<IEnumerable<DonationHistoryResponseDto>> GetAllDonationHistoryByDonorId(int DonorId);
     }
 }

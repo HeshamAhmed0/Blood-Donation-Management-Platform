@@ -22,6 +22,6 @@ namespace Domain.Meduls
         #endregion
 
         public DateTime DonationDate { get; set; }= DateTime.Now;
-        public string Notes { get; set; }=null!;
+        public string Notes { get; set; }="There Are Not Any Notes"!;
     }
 }
