@@ -9,7 +9,7 @@ namespace Domain.Exceptions.DonorExceptions
 {
     public class DonorConflictException : DonationRequestException
     {
-        public DonorConflictException(string Email) : base($"A donor with email {Email} already exists.", 409)
+        public DonorConflictException() : base($"A donor with This Data already exists.", 409)
         {
         }
     }

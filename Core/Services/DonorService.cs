@@ -28,7 +28,7 @@ namespace Services
         {
             if (donorRequestDto is null) throw new DonorValidationException();
             var donor =await GetDonorsByIdOrNameOrEmailOrPhoneNumber(donorRequestDto.PhoneNumber);
-            if (donor is not null) throw new DonorConflictException(donorRequestDto.Email);
+            if (donor is not null) throw new DonorConflictException();
             BloodTypes BloodTypeOfNewUser = (BloodTypes)donorRequestDto.BloodType;
             var NewDonor = new Donor()
             {
@@ -155,7 +155,7 @@ namespace Services
         }
         public async Task<DonorResponseDto> GetDonorsByIdOrNameOrEmailOrPhoneNumber(int Id)
         {
-            if (Id == null) throw new Exception("Id Not Allow To be Null");
+            if (Id == null) throw new DonorValidationException();
             var donorRequestDto = await donorReposatory.GetDonorsByIdOrNameOrEmailOrPhoneNumber(Id);
             if (donorRequestDto == null) throw new DonorNotFoundException();
             BloodTypesRequestDto BloodOFUser = (BloodTypesRequestDto)donorRequestDto.BloodType;
@@ -178,9 +178,9 @@ namespace Services
         }
         public async Task<DonorResponseDto> GetDonorsByIdOrNameOrEmailOrPhoneNumber(string NameOrEmailOrPhoneNumber)
         {
-            if (NameOrEmailOrPhoneNumber == null) throw new Exception("NameOrEmailOrPhoneNumber Not Allow To be Null");
+            if (NameOrEmailOrPhoneNumber == null) throw new DonorValidationException();
             var donorRequestDto = await donorReposatory.GetDonorsByIdOrNameOrEmailOrPhoneNumber(NameOrEmailOrPhoneNumber);
-            if (donorRequestDto == null) return null;
+            if (donorRequestDto == null) throw new DonorNotFoundException();
             BloodTypesRequestDto BloodOFUser = (BloodTypesRequestDto)donorRequestDto.BloodType;
             var DonorResponse = new DonorResponseDto()
             {
