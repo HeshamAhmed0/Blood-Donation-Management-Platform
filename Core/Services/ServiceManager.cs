@@ -21,6 +21,6 @@ namespace Services
 
         public INotificationService notificationService { get; } = new NotificationService( configuration);
 
-        public IDashboardService dashboardService { get; } = new DashboardService(donorService, donationRequestService, unitOfWork);
+        public IDashboardService dashboardService { get; } = new DashboardService(unitOfWork,donorService,donationRequestService);
     }
 }

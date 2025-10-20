@@ -11,7 +11,7 @@ namespace Blood_Donation_Management_Platform.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class DashboardController :ControllerBase
+    public class DashboardController : ControllerBase
     {
         private readonly IServiceManager serviceManager;
 
@@ -25,38 +25,41 @@ namespace Blood_Donation_Management_Platform.Api.Controllers
         {
             try
             {
-            var result =await serviceManager.dashboardService.AddDonationHistory(donationHistoryRequestDto);
-                 return Ok(new
-                            {
-                                StatusCode = StatusCodes.Status200OK,
-                                Message="Add Donation History Done",
-                                Data=result
-                            });
-            }catch (DonorNotFoundException ex)
+                var result = await serviceManager.dashboardService.AddDonationHistory(donationHistoryRequestDto);
+                return Ok(new
+                {
+                    StatusCode = StatusCodes.Status200OK,
+                    Message = "Add Donation History Done",
+                    Data = result
+                });
+            }
+            catch (DonorNotFoundException ex)
             {
                 return NotFound(ex.Message);
-            }catch(DonationRequestNotFoundException ex)
+            }
+            catch (DonationRequestNotFoundException ex)
             {
                 return NotFound(ex.Message);
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return StatusCode(500, ex.Message);
             }
-           
+
         }
         [HttpPost("AddDonor")]
-        public async Task<IActionResult> AddDonor (DonorRequestDto donorRequestDto)
+        public async Task<IActionResult> AddDonor(DonorRequestDto donorRequestDto)
         {
-           
+
             try
             {
-             var result =await serviceManager.dashboardService.AddDonor(donorRequestDto);
-                        return Ok(new
-                        {
-                            StatusCode = StatusCodes.Status200OK,
-                            Message = "Add Donor Done",
-                            Data = result
-                        });
+                var result = await serviceManager.dashboardService.AddDonor(donorRequestDto);
+                return Ok(new
+                {
+                    StatusCode = StatusCodes.Status200OK,
+                    Message = "Add Donor Done",
+                    Data = result
+                });
             }
             catch (DonorValidationException)
             {
@@ -83,7 +86,8 @@ namespace Blood_Donation_Management_Platform.Api.Controllers
                     Message = "CountOfDonationRequest",
                     Data = result
                 });
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return NotFound(ex.Message);
             }
@@ -101,7 +105,8 @@ namespace Blood_Donation_Management_Platform.Api.Controllers
                     Message = "CountOfDonors",
                     Data = result
                 });
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return NotFound(ex.Message);
             }
@@ -118,7 +123,8 @@ namespace Blood_Donation_Management_Platform.Api.Controllers
                     Message = "AllDonationHistory",
                     Data = result
                 });
-            }catch( Exception ex)
+            }
+            catch (Exception ex)
             {
                 return NotFound(ex.Message);
             }
@@ -135,9 +141,10 @@ namespace Blood_Donation_Management_Platform.Api.Controllers
                     Message = "AllDonationHistoryByDonorId",
                     Data = result
                 });
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
-               return NotFound(ex.Message);
+                return NotFound(ex.Message);
             }
         }
         [HttpPost("GetAllDonationHistoryByPatientId")]
@@ -152,7 +159,8 @@ namespace Blood_Donation_Management_Platform.Api.Controllers
                     Message = "AllDonationHistoryByPatientId",
                     Data = result
                 });
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return NotFound(ex.Message);
             }
@@ -181,13 +189,13 @@ namespace Blood_Donation_Management_Platform.Api.Controllers
         {
             try
             {
-            var result = await serviceManager.dashboardService.GetAllDonors();
-                        return Ok(new
-                        {
-                            StatusCode = StatusCodes.Status200OK,
-                            Message = "AllDonors",
-                            Data = result
-                        });
+                var result = await serviceManager.dashboardService.GetAllDonors();
+                return Ok(new
+                {
+                    StatusCode = StatusCodes.Status200OK,
+                    Message = "AllDonors",
+                    Data = result
+                });
             }
             catch (DonorNotFoundException ex)
             {
@@ -195,7 +203,7 @@ namespace Blood_Donation_Management_Platform.Api.Controllers
             }
         }
         [HttpPost("GetDonationRequestsByBloodType")]
-        public async Task<IActionResult> GetDonationRequestsByBloodType([FromQuery]BloodTypesRequestDto bloodTypesRequestDto)
+        public async Task<IActionResult> GetDonationRequestsByBloodType([FromQuery] BloodTypesRequestDto bloodTypesRequestDto)
         {
             try
             {
@@ -206,13 +214,14 @@ namespace Blood_Donation_Management_Platform.Api.Controllers
                     Message = "All Donation Requests By BloodType",
                     Data = result
                 });
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return NotFound(ex.Message);
             }
         }
         [HttpPost("GetDonorsByBloodType")]
-        public async Task<IActionResult> GetDonorsByBloodType([FromQuery]BloodTypesRequestDto bloodTypesRequestDto)
+        public async Task<IActionResult> GetDonorsByBloodType([FromQuery] BloodTypesRequestDto bloodTypesRequestDto)
         {
             try
             {
@@ -223,7 +232,8 @@ namespace Blood_Donation_Management_Platform.Api.Controllers
                     Message = "All Donor By BloodType",
                     Data = result
                 });
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return NotFound(ex.Message);
             }
@@ -233,13 +243,13 @@ namespace Blood_Donation_Management_Platform.Api.Controllers
         {
             try
             {
-             var result = await serviceManager.dashboardService.UpdateDonationRequestStatus(DonationRequestId, NewstatusOfRequestDto);
-                        return Ok(new
-                        {
-                            StatusCode = StatusCodes.Status200OK,
-                            Message = "Update Donation Request Status Done",
-                            Data = result
-                        });
+                var result = await serviceManager.dashboardService.UpdateDonationRequestStatus(DonationRequestId, NewstatusOfRequestDto);
+                return Ok(new
+                {
+                    StatusCode = StatusCodes.Status200OK,
+                    Message = "Update Donation Request Status Done",
+                    Data = result
+                });
             }
             catch (DonationRequestValidationException ex)
             {
@@ -253,16 +263,16 @@ namespace Blood_Donation_Management_Platform.Api.Controllers
         [HttpPut("UpdateDonor")]
         public async Task<IActionResult> UpdateDonor(DonorUpdateDto donorUpdateDto)
         {
-            
+
             try
             {
-            var result =await serviceManager.dashboardService.UpdateDonor(donorUpdateDto);
-                        return Ok(new
-                        {
-                            StatusCode = StatusCodes.Status200OK,
-                            Message = "Update Donor Done",
-                            Data = result
-                        });
+                var result = await serviceManager.dashboardService.UpdateDonor(donorUpdateDto);
+                return Ok(new
+                {
+                    StatusCode = StatusCodes.Status200OK,
+                    Message = "Update Donor Done",
+                    Data = result
+                });
             }
             catch (DonorValidationException)
             {

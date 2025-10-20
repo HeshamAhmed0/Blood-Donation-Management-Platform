@@ -28,7 +28,7 @@ namespace Services
         {
             if (donorRequestDto is null) throw new DonorValidationException();
             var donor =await GetDonorsByIdOrNameOrEmailOrPhoneNumber(donorRequestDto.PhoneNumber);
-            if (donor is not null) throw new DonorConflictException();
+            if (donor == false) throw new DonorConflictException();
             BloodTypes BloodTypeOfNewUser = (BloodTypes)donorRequestDto.BloodType;
             var NewDonor = new Donor()
             {
@@ -153,51 +153,21 @@ namespace Services
             }
             return donorResponseDtos;
         }
-        public async Task<DonorResponseDto> GetDonorsByIdOrNameOrEmailOrPhoneNumber(int Id)
+        public async Task<bool> GetDonorsByIdOrNameOrEmailOrPhoneNumber(int Id)
         {
             if (Id == null) throw new DonorValidationException();
             var donorRequestDto = await donorReposatory.GetDonorsByIdOrNameOrEmailOrPhoneNumber(Id);
-            if (donorRequestDto == null) throw new DonorNotFoundException();
-            BloodTypesRequestDto BloodOFUser = (BloodTypesRequestDto)donorRequestDto.BloodType;
-            var DonorResponse = new DonorResponseDto()
-            {
-                Id = donorRequestDto.Id,
-                Email = donorRequestDto.Email,
-                BloodType = BloodOFUser,
-                LastDonationDate = donorRequestDto.LastDonationDate,
-                CreateAt = DateTime.Now,
-                Location = donorRequestDto.Location,
-                Name = donorRequestDto.Name,
-                PhoneNumber = donorRequestDto.PhoneNumber,
-                UnAvailableFrom = donorRequestDto.UnAvailableFrom,
-                UnAvailableTo = donorRequestDto.UnAvailableTo,
-                Latitude = donorRequestDto.Latitude,
-                Longitude = donorRequestDto.Longitude,
-            };
-            return DonorResponse;
+            if (donorRequestDto != null) return false;
+           
+            return true;
         }
-        public async Task<DonorResponseDto> GetDonorsByIdOrNameOrEmailOrPhoneNumber(string NameOrEmailOrPhoneNumber)
+        public async Task<bool> GetDonorsByIdOrNameOrEmailOrPhoneNumber(string NameOrEmailOrPhoneNumber)
         {
             if (NameOrEmailOrPhoneNumber == null) throw new DonorValidationException();
             var donorRequestDto = await donorReposatory.GetDonorsByIdOrNameOrEmailOrPhoneNumber(NameOrEmailOrPhoneNumber);
-            if (donorRequestDto == null) throw new DonorNotFoundException();
-            BloodTypesRequestDto BloodOFUser = (BloodTypesRequestDto)donorRequestDto.BloodType;
-            var DonorResponse = new DonorResponseDto()
-            {
-                Id= donorRequestDto.Id,
-                Email = donorRequestDto.Email,
-                BloodType = BloodOFUser,
-                LastDonationDate = donorRequestDto.LastDonationDate,
-                CreateAt = DateTime.Now,
-                Location = donorRequestDto.Location,
-                Name = donorRequestDto.Name,
-                PhoneNumber = donorRequestDto.PhoneNumber,
-                UnAvailableFrom = donorRequestDto.UnAvailableFrom,
-                UnAvailableTo = donorRequestDto.UnAvailableTo,
-                Longitude = donorRequestDto.Longitude,
-                Latitude = donorRequestDto.Latitude,
-            };
-            return DonorResponse;
+            if (donorRequestDto != null) return false;
+            
+            return true;
         }
 
         public async Task<Donor> CheckForDonor(int Id)

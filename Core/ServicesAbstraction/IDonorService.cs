@@ -13,7 +13,7 @@ namespace ServicesAbstraction
         public Task<DonorResponseDto> UpdateDonor(DonorUpdateDto donorUpdateDto);
         public Task<string> DeleteDonor(int Id);
         public Task<IEnumerable<DonorResponseDto>> GetAllDonors();
-        public Task<DonorResponseDto> GetDonorsByIdOrNameOrEmailOrPhoneNumber(int Id);
-        public Task<DonorResponseDto> GetDonorsByIdOrNameOrEmailOrPhoneNumber(string NameOrEmailOrPhoneNumber);
+        public Task<bool> GetDonorsByIdOrNameOrEmailOrPhoneNumber(int Id);
+        public Task<bool> GetDonorsByIdOrNameOrEmailOrPhoneNumber(string NameOrEmailOrPhoneNumber);
     }
 }
