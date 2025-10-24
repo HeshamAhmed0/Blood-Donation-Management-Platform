@@ -13,9 +13,13 @@ using Shared;
 
 namespace Services
 {
-    public class DashboardService(IUnitOfWork unitOfWork , IDonorService donorService , IDonationRequestService donationRequestService) : IDashboardService
+    public class DashboardService(IUnitOfWork unitOfWork , 
+                                  IDonorService donorService , 
+                                  IDonationRequestService donationRequestService,
+                                  IdonationHistoryService donationHistoryService) : IDashboardService
     {
         private readonly IUnitOfWork unitOfWork = unitOfWork;
+        private readonly IdonationHistoryService donationHistoryService = donationHistoryService;
 
         public async Task<DonationHistoryResponseDto> AddDonationHistory(DonationHistoryRequestDto donationHistoryRequestDto)
         {
@@ -60,19 +64,22 @@ namespace Services
             return response;
         }
 
-        public Task<IEnumerable<DonationHistoryResponseDto>> GetAllDonationHistory()
+        public async Task<IEnumerable<DonationHistoryResponseDto>> GetAllDonationHistory()
         {
-            throw new NotImplementedException();
+            var result = await donationHistoryService.GetAllDonationHistory();
+            return result;
         }
 
-        public Task<IEnumerable<DonationHistoryResponseDto>> GetAllDonationHistoryByDonorId(int DonorId)
+        public async Task<IEnumerable<DonationHistoryResponseDto>> GetAllDonationHistoryByDonorId(int DonorId)
         {
-            throw new NotImplementedException();
+           var result = await donationHistoryService.GetAllDonationHistoryByDonorId(DonorId);
+            return result;
         }
 
-        public Task<IEnumerable<DonationHistoryResponseDto>> GetAllDonationHistoryByPatientId(int PatientId)
+        public async Task<IEnumerable<DonationHistoryResponseDto>> GetAllDonationHistoryByPatientId(int PatientId)
         {
-            throw new NotImplementedException();
+           var result = await donationHistoryService.GetAllDonationHistoryByPatientId(PatientId);
+            return result;
         }
 
         public async Task<IEnumerable<DonationResponseDto>> GetAllDonationRequest()
@@ -87,19 +94,41 @@ namespace Services
             return result;
         }
 
-        public Task<IEnumerable<DonationResponseDto>> GetDonationRequestsByBloodType(BloodTypesRequestDto bloodTypesRequestDto)
+        public async Task<IEnumerable<DonationResponseDto>> GetDonationRequestsByBloodType(BloodTypesRequestDto bloodTypesRequestDto)
         {
-            throw new NotImplementedException();
+            var AllDonationRequest = await donationRequestService.GetAllDonationRequest();
+            var resultAfterFilteration = AllDonationRequest.Where(B => B.NeedBloodType == bloodTypesRequestDto);
+            return resultAfterFilteration;
         }
 
-        public Task<IEnumerable<DonorResponseDto>> GetDonorsByBloodType(BloodTypesRequestDto bloodTypesRequestDto)
+        public async Task<IEnumerable<DonorResponseDto>> GetDonorsByBloodType(BloodTypesRequestDto bloodTypesRequestDto)
         {
-            throw new NotImplementedException();
+            var AllDonors = await donorService.GetAllDonors();
+            var resultAfterFilteration = AllDonors.Where(B => B.BloodType == bloodTypesRequestDto);
+            return resultAfterFilteration;
         }
 
-        public Task<DonationResponseDto> UpdateDonationRequestStatus(int DonationRequestId, StatusOfRequestDto statusOfRequestDto)
+        public async Task<DonationResponseDto> UpdateDonationRequestStatus(int DonationRequestId, StatusOfRequestDto statusOfRequestDto)
         {
-            throw new NotImplementedException();
+            var DonationRequest = await donationRequestService.GetDonationRequestByIdOrNameOrEmailOrPhoneNumber(DonationRequestId);
+            if (DonationRequest == null) throw new DonationRequestNotFoundException(DonationRequestId);
+            var DonationUpdateDto = new DonationUpdateDto()
+            {
+                Id = DonationRequestId,
+                RequestDate = DateTime.Now,
+                Email=DonationRequest.Email,
+                HospitalLocation=DonationRequest.HospitalLocation,
+                Status = statusOfRequestDto,
+                HospitalName=DonationRequest.HospitalName,
+                IsUrgent=DonationRequest.IsUrgent,
+                Latitude=DonationRequest.Latitude,
+                Longitude=DonationRequest.Longitude,
+                NeedBloodType=DonationRequest.NeedBloodType,
+                PatientName=DonationRequest.PatientName,
+                PhoneNumber=DonationRequest.PhoneNumber,
+            };
+            var result = await donationRequestService.UpdateDonationRequest(DonationUpdateDto);
+            return result;
         }
 
         public async Task<DonorResponseDto> UpdateDonor(DonorUpdateDto donorUpdateDto)
