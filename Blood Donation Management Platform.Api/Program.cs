@@ -19,32 +19,10 @@ namespace Blood_Donation_Management_Platform.Api
         public  static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
-            // Add services to the container.
-
-            builder.Services.AddControllers();
-            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-            builder.Services.AddScoped<IDbInitialize,DbInitializer>();
-            builder.Services.AddScoped<INotificationService, NotificationService>();
-            builder.Services.AddScoped<IDonorService,DonorService>();
-            builder.Services.AddScoped<IDonorReposatory, DonorReposatory>();
-            builder.Services.AddScoped<IDonationRequestReposatory,DonationRequestReposatory>();
-            builder.Services.AddScoped<IDonationRequestService,DonationRequestService>();
-            builder.Services.AddScoped<IServiceManager,ServiceManager>();
-            builder.Services.AddScoped<IDonationHistoryReposatory, DonationHistoryReposatory>();
-            builder.Services.AddScoped<IdonationHistoryService,DonationHistoryService>();
-            //builder.Services.AddScoped<IDashboardService,DashboardService>();
-            //builder.Services.AddAutoMapper(typeof(AssemplyForAutoMapper).Assembly);
-
-            #region DbContext
-            builder.Services.AddDbContext<BloodDonationDbContext>(options =>
-               {
-                   options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-               });
-            builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
-                   .AddEntityFrameworkStores<BloodDonationDbContext>()
-                   .AddDefaultTokenProviders(); 
-            #endregion
+            builder.Services.InfrustructionServices();
+            builder.Services.DbContextServices(builder.Configuration);
+            builder.Services.ApplicationServices();
+            builder.Services.ReposatoriesServices();
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -61,7 +39,7 @@ namespace Blood_Donation_Management_Platform.Api
             #endregion
 
             // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
+            //if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
